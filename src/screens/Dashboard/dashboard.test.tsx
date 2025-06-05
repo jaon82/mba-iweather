@@ -13,17 +13,18 @@ import {
 } from "@tests/utils/customRender";
 
 describe("Screen: Dashboard", () => {
-  it("should be show city weather", async () => {
-    jest.spyOn(api, "get").mockResolvedValue({ data: mockWeatherAPIResponse });
-
+  beforeAll(async () => {
     const city = {
       id: "1",
       name: "Rio do Sul, BR",
       latitude: 123,
       longitude: 456,
     };
-
     await saveStorageCity(city);
+  });
+
+  it("should be show city weather", async () => {
+    jest.spyOn(api, "get").mockResolvedValue({ data: mockWeatherAPIResponse });
 
     render(<Dashboard />);
 
@@ -32,15 +33,6 @@ describe("Screen: Dashboard", () => {
   });
 
   it("should be show another selected weather city", async () => {
-    const city = {
-      id: "1",
-      name: "Rio do Sul, BR",
-      latitude: 123,
-      longitude: 456,
-    };
-
-    await saveStorageCity(city);
-
     jest
       .spyOn(api, "get")
       .mockResolvedValueOnce({ data: mockWeatherAPIResponse })
