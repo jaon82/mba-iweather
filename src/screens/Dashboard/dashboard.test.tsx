@@ -28,9 +28,11 @@ describe("Screen: Dashboard", () => {
 
     render(<Dashboard />);
 
+    await waitForElementToBeRemoved(() => screen.queryByTestId("loading"));
+
     const cityName = await waitFor(() => screen.findByText(/rio do sul/i));
     expect(cityName).toBeTruthy();
-  });
+  }, 8000);
 
   it("should be show another selected weather city", async () => {
     jest
